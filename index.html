@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gym Check</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#f2f4f7;--card:#fff;--ink:#101828;--mute:#5b667a;--line:#d9dee7;--acc:#2f4bff;--accink:#fff;--ok:#0f8a46;--bad:#d62839;--okbg:#e3f6ea;--badbg:#fde7e9;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0e1116;--card:#171c24;--ink:#e8ecf2;--mute:#9aa5b8;--line:#2a3240;--acc:#6f86ff;--accink:#0e1116;--ok:#3ccf7a;--bad:#ff6b78;--okbg:#12301f;--badbg:#3a171c}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0e1116;--card:#171c24;--ink:#e8ecf2;--mute:#9aa5b8;--line:#2a3240;--acc:#6f86ff;--accink:#0e1116;--ok:#3ccf7a;--bad:#ff6b78;--okbg:#12301f;--badbg:#3a171c}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 Barlow,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:620px;margin:0 auto;padding:16px 14px 48px}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",Impact,sans-serif;font-weight:700;margin:0;letter-spacing:.2px}
+h1{font-size:34px;line-height:1}
+.sub{color:var(--mute);margin:4px 0 14px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.tog{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mute);white-space:nowrap}
+.tog input{width:18px;height:18px;accent-color:var(--bad)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
+.tabs button{flex:0 0 auto;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font:600 15px Barlow,sans-serif;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:var(--accink)}
+.ex{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 12px 10px;margin-bottom:10px}
+.ex.pass{border-color:var(--ok)}.ex.fail{border-color:var(--bad)}
+.eh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.eh h3{font-size:22px}
+.tgt{color:var(--mute);font-weight:600;font-size:15px;white-space:nowrap}
+.last{font-size:13px;color:var(--mute);margin:0 0 6px}
+.set{display:grid;grid-template-columns:54px 1fr 1fr;gap:8px;align-items:center;margin-top:6px}
+.set.one{grid-template-columns:54px 1fr}
+.set span{color:var(--mute);font-size:14px}
+input[type=number]{width:100%;font:600 18px Barlow,sans-serif;padding:9px 10px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=number]:focus,button:focus-visible,input[type=checkbox]:focus-visible{outline:3px solid var(--acc);outline-offset:1px}
+.note{margin:8px 0 0;font-size:15px;font-weight:500}
+.pass .note{color:var(--ok)}.fail .note{color:var(--bad)}
+.acts{display:flex;gap:8px;margin:14px 0}
+.go{flex:1;border:0;border-radius:10px;background:var(--acc);color:var(--accink);font:700 22px "Barlow Condensed",sans-serif;padding:13px;cursor:pointer}
+.ghost{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:0 16px;font:600 15px Barlow,sans-serif;cursor:pointer}
+.verdict{border-radius:14px;padding:18px 16px;margin:0 0 14px;text-align:center}
+.verdict.up{background:var(--okbg);color:var(--ok)}.verdict.down{background:var(--badbg);color:var(--bad)}
+.thumb{font-size:72px;line-height:1;display:block;margin-bottom:6px}
+.verdict h2{font-size:30px}
+.verdict p{margin:8px 0 0;font-size:17px;font-weight:500;color:var(--ink)}
+.hist{margin-top:22px}.hist h2{font-size:22px;margin-bottom:6px}
+.hist li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:15px}
+.hist ul{list-style:none;margin:0;padding:0}
+.foot{margin-top:22px;font-size:13px;color:var(--mute)}
+.panel{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:18px}.panel summary{font:700 20px "Barlow Condensed",sans-serif;cursor:pointer}.panel input[type=text],.panel input[type=password]{width:100%;font:500 16px Barlow,sans-serif;padding:9px 10px;margin-top:8px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}.panel button{margin-top:10px;padding:10px 16px}.panel p{font-size:14px;color:var(--mute);margin:8px 0 0}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div><h1>Gym Check</h1><p class="sub" id="sub"></p></div>
+    <label class="tog"><input type="checkbox" id="savage" checked> Profanity</label>
+  </div>
+  <div id="verdict" aria-live="polite"></div>
+  <div id="list"></div>
+  <div class="acts"><button class="go" id="finish">Finish and get my review</button><button class="ghost" id="reset">Clear</button></div>
+  <section class="hist"><h2>Recent sessions</h2><ul id="hist"></ul></section>
+  <section class="hist" id="review"><h2>Weekly review</h2><div id="rv"></div></section>
+  <details class="panel"><summary>Cloud sync</summary><p>Optional. Syncs finished sessions and your target weights across devices. Enter your Supabase details once on each device.</p><input type="text" id="su" placeholder="Supabase project URL" autocomplete="off"><input type="text" id="sk" placeholder="Supabase publishable (anon) key" autocomplete="off"><input type="password" id="sp" placeholder="Your own secret passphrase" autocomplete="off"><button class="ghost" id="ss">Save and sync</button><p id="syncmsg"></p></details>
+  <p class="foot">Dizzy, chest pain or feeling unwell: stop and rest. That is not failing. Keep breathing on every rep.</p>
+</main>
+<script>
+var START=new Date(2026,10,2);
+var PH=["Weeks 1–2","Weeks 3–4","Weeks 5–6","Weeks 7–8","Last 4 days"];
+// [name, main lift, low reps, high reps, unit]
+var TW=["Treadmill warm-up",0,5,5,"min"],TF=["Treadmill incline walk",0,10,10,"min"];
+var DAYS={
+A:{n:"Upper A",e:[TW,["Chest press",1,8,12],["Lat pulldown",1,8,12],["Seated cable row",1,8,12],["Incline dumbbell press",0,8,12],["Cable chest fly",0,12,15],["Lateral raise",0,12,15],["Triceps pressdown",0,10,15],["Dumbbell curl",0,10,15],TF]},
+B:{n:"Lower A",e:[TW,["Leg press",1,8,12],["Dumbbell Romanian deadlift",1,8,10],["Leg curl",0,10,15],["Supported step-up (each leg)",0,8,8],["Calf raise",0,12,15],["Dead bug (each side)",0,8,8],["Plank",0,20,40,"sec"],TF]},
+C:{n:"Upper B",e:[TW,["Incline chest press",1,8,12],["Chest-supported row",1,8,12],["Flat dumbbell press",0,8,12],["Cable fly (low to high)",0,12,15],["Lat pulldown",0,8,12],["Face pull",0,12,15],["Triceps extension",0,10,15],["Hammer curl",0,10,15],TF]},
+D:{n:"Lower B",e:[TW,["Goblet squat or leg press",1,8,12],["Hip thrust",1,8,12],["Leg extension",0,10,15],["Leg curl",0,10,15],["Supported reverse lunge (each leg)",0,8,8],["Dead bug (each side)",0,8,8],["Plank",0,20,40,"sec"],TF]},
+W:{n:"Walk day"}
+};
+var KEYS=["A","B","C","D","W"];
+var today=new Date();
+var cur=({1:"A",3:"B",5:"C",6:"D"})[today.getDay()]||"W";
+function ph(){var n=Math.floor((today-START)/864e5);return n<14?0:n<28?1:n<42?2:n<56?3:4}
+function sets(x){var u=x[4];if(u==="min")return 1;if(x[1])return [2,3,3,3,2][ph()];return 2}
+function store(k,v){try{if(v===undefined){var s=localStorage.getItem(k);return s?JSON.parse(s):null}localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+var dstr=today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+var draft=function(){return store("gc-draft-"+dstr+"-"+cur)||{}};
+function $(id){return document.getElementById(id)}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+
+var ROAST={
+ exMiss:{s:["{x}: {d} of {n} sets. You wrote the plan, then bitched out. Weak as hell.","{x}: {d}/{n} sets? Don’t write plans you’re too soft to finish.","{x}: {d} of {n} sets. That’s not training, that’s a damn hobby."],
+         m:["{x}: only {d} of {n} sets. Finish what you plan.","{x}: {d}/{n} sets. Next time do the full count."]},
+ exLow:{s:["{x}: {r} reps when the floor was {lo}. Lighter weight, then earn it back, you stubborn ass.","{x}: {r} reps? The minimum is {lo}. That was a warm-up, not a set."],
+        m:["{x}: {r} reps is under the {lo} minimum. Drop the weight a bit.","{x}: a set came in below {lo}. Use a lighter weight."]},
+ exOk:["{x}: planned work done. Add a rep or a little weight next time.","{x}: solid. Now beat it."],
+ exTop:["{x}: top of the range on every set. Go heavier next time.","{x}: crushed it. Add weight."],
+ up:["Every planned set done. Hell yes.","Clean session. That is the work.","Nothing skipped, nothing faked. Good."],
+ down1:{s:["Thumbs down. One thing slipped. Fix it next session, no excuses.","Almost, but almost doesn’t build chests. Tighten up."],m:["Thumbs down. One thing slipped. Fix it next time.","Close. Tighten it up."]},
+ down2:{s:["Thumbs down. That session was dogshit and you know it. The plan was fine. You weren’t.","What the hell was that? Get your lazy ass back under the bar and finish the job."],m:["Thumbs down. Too much missed. Come back and finish the plan.","That wasn’t the plan. Reset and go again."]},
+ none:{s:["You logged nothing. Shortest workout in history, you magnificent slacker.","Zero reps logged. Bold strategy, genius."],m:["Nothing logged yet. Enter your sets first."]}
+};
+function line(g,k){var s=$("savage").checked?"s":"m";return pick(ROAST[g][s]||ROAST[g])}
+function fill(t,o){return t.replace(/\{(\w+)\}/g,function(_,k){return o[k]})}
+
+function render(){
+ $("sub").textContent=today.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})+" · "+DAYS[cur].n+" · "+PH[ph()];
+ 
+ 
+ var d=draft(),lw=store("gc-lastw")||{},h="";
+ if(cur==="W"){
+  h='<div class="ex"><div class="eh"><h3>Steps</h3><span class="tgt">goal 10,000+</span></div><div class="set one"><span>Steps</span><input type="number" inputmode="numeric" min="0" data-e="steps" data-i="0" value="'+((d.steps||[])[0]||"")+'" placeholder="steps today"></div></div>';
+ } else {
+  DAYS[cur].e.forEach(function(x,ei){
+   var n=sets(x),u=x[4],name=x[0],tgt,rows="",e=d["e"+ei]||[];
+   var rng=x[2]===x[3]?x[2]:x[2]+"–"+x[3];
+   if(u){tgt=(n>1?n+" × ":"")+rng+" "+u}else tgt=n+" × "+rng+" reps";
+   for(var i=0;i<n;i++){
+    var r=(e[i]||{}).r||"",w=(e[i]||{}).w||"";
+    if(u)rows+='<div class="set one"><span>'+(n>1?"Set "+(i+1):u)+'</span><input type="number" inputmode="numeric" min="0" data-e="e'+ei+'" data-i="'+i+'" data-f="r" value="'+r+'" placeholder="'+u+'"></div>';
+    else rows+='<div class="set"><span>Set '+(i+1)+'</span><input type="number" inputmode="numeric" min="0" data-e="e'+ei+'" data-i="'+i+'" data-f="r" value="'+r+'" placeholder="reps"><input type="number" inputmode="decimal" min="0" step="0.5" data-e="e'+ei+'" data-i="'+i+'" data-f="w" value="'+w+'" placeholder="kg"></div>';
+   }
+   var last=lw[name]?'<p class="last">Last time: '+lw[name]+' kg</p>':"";var tk2=u?"":'<p class="last">Target kg <input type="number" inputmode="decimal" min="0" step="0.5" data-t="'+name+'" value="'+(T[name]||"")+'" style="width:90px;padding:5px 8px;font-size:16px"></p>';
+   h+='<div class="ex" id="ex'+ei+'"><div class="eh"><h3>'+name+'</h3><span class="tgt">'+tgt+'</span></div>'+last+tk2+rows+'<p class="note"></p></div>';
+  });
+ }
+ $("list").innerHTML=h;
+ [].forEach.call(document.querySelectorAll("#list input"),function(inp){inp.oninput=save});
+ hist();
+}
+function save(){
+ var d=draft();
+ [].forEach.call(document.querySelectorAll("#list input"),function(inp){
+  if(inp.dataset.t){T[inp.dataset.t]=inp.value;tch=1;return}var k=inp.dataset.e,i=+inp.dataset.i,f=inp.dataset.f;
+  if(k==="steps"){d.steps=[inp.value];return}
+  d[k]=d[k]||[];d[k][i]=d[k][i]||{};d[k][i][f]=inp.value;
+ });
+ store("gc-draft-"+dstr+"-"+cur,d);if(tch){store("gc-targets",T);push();tch=0}
+}
+function mark(ei,pass,msg){var el=$("ex"+ei);el.className="ex "+(pass?"pass":"fail");el.querySelector(".note").textContent=(pass?"👍 ":"👎 ")+msg}
+function finish(){
+ save();var d=draft(),v=$("verdict"),fails=0,logged=0,total=0,fl=[],lw=store("gc-lastw")||{};
+ if(cur==="W"){
+  var st=+((d.steps||[])[0]||0);
+  if(!st){v.innerHTML=box(false,line("none"));return}
+  var okk=st>=10000;
+  v.innerHTML=box(okk,okk?st.toLocaleString()+" steps. Goal hit.":st.toLocaleString()+" steps. "+(st>=7000?"Close, but 10,000 was the target. Go walk the rest.":($("savage").checked?"Under 7,000? Get off your ass and walk.":"Well short of 10,000. Go for another walk.")));
+  addHist(okk,0,[],st);return;
+ }
+ DAYS[cur].e.forEach(function(x,ei){
+  var n=sets(x),e=d["e"+ei]||[],done=0,low=0,top=0,lowv=0;
+  for(var i=0;i<n;i++){var r=+((e[i]||{}).r||0);if(r>0){done++;if(r<x[2]){low++;lowv=r}if(r>=x[3])top++}}
+  total++;if(done)logged++;var mw=Math.max.apply(null,[0].concat(e.map(function(s){return +(s&&s.w||0)}))),tk=+T[x[0]]||0;
+  var o={x:x[0],d:done,n:n,r:lowv,lo:x[2]};
+  if(done<n){fails++;mark(ei,false,fill(line("exMiss"),o))}
+  else if(low){fails++;mark(ei,false,fill(line("exLow"),o))}
+  else if(tk&&!x[4]&&mw<tk){fails++;mark(ei,false,x[0]+": top weight "+mw+" kg, target "+tk+" kg. "+($("savage").checked?"Lift the damn weight you set.":"Hit the target you set."))}
+  else if(top===n&&!x[4]){mark(ei,true,fill(pick(ROAST.exTop),o))}
+  else mark(ei,true,fill(pick(ROAST.exOk),o));
+  if($("ex"+ei).className==="ex fail")fl.push(x[0]);var w=[].concat(e).map(function(s){return +(s&&s.w||0)}).filter(Boolean);if(w.length)lw[x[0]]=Math.max.apply(null,w);
+ });
+ if(!logged){v.innerHTML=box(false,line("none"));return}
+ store("gc-lastw",lw);
+ var up=fails===0;
+ v.innerHTML=box(up,up?pick(ROAST.up):line(fails===1?"down1":"down2"));
+ addHist(up,fails,fl);window.scrollTo({top:0,behavior:"smooth"});
+}
+function box(up,msg){return '<div class="verdict '+(up?"up":"down")+'"><span class="thumb">'+(up?"👍":"👎")+'</span><h2>'+(up?"Good session":"Not good enough")+'</h2><p>'+msg+'</p></div>'}
+function addHist(up,f,fl,st){var h=store("gc-hist")||[];h.unshift({d:today.toLocaleDateString(undefined,{day:"numeric",month:"short"}),n:DAYS[cur].n,up:up});store("gc-hist",h.slice(0,10));hist();var rec={up:up,fl:fl||[],steps:st||0,name:DAYS[cur].n},L=store("gc-log")||{};L[iso(today)+"|"+cur]=rec;store("gc-log",L);put(iso(today),cur,rec);review()}
+function hist(){var h=store("gc-hist")||[];$("hist").innerHTML=h.length?h.map(function(s){return "<li><span>"+s.d+" · "+s.n+"</span><span>"+(s.up?"👍":"👎")+"</span></li>"}).join(""):"<li><span>Nothing yet. Go lift something.</span></li>"}
+$("finish").onclick=finish;
+$("reset").onclick=function(){store("gc-draft-"+dstr+"-"+cur,{});$("verdict").innerHTML="";render()};
+$("savage").checked=store("gc-savage")!==false;
+$("savage").onchange=function(){store("gc-savage",$("savage").checked)};
+var T=store("gc-targets")||{},CFG=store("gc-cfg")||{},ptm,tch=0;
+function iso(d){return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+function on(){return CFG.url&&CFG.key&&CFG.pass}
+function hdr(){var h={"Content-Type":"application/json",apikey:CFG.key,"x-sync-key":CFG.pass};if(CFG.key.indexOf("eyJ")===0)h.Authorization="Bearer "+CFG.key;return h}
+function base(){return CFG.url.replace(/\/$/,"")+"/rest/v1/gym_logs"}
+function msg(m){$("syncmsg").textContent=m}
+function put(date,s,data){if(!on())return;var h=hdr();h.Prefer="resolution=merge-duplicates";fetch(base()+"?on_conflict=sync_key,log_date,session",{method:"POST",headers:h,body:JSON.stringify({sync_key:CFG.pass,log_date:date,session:s,data:data})}).then(function(r){msg(r.ok?"Synced.":"Sync failed ("+r.status+"). Check your details.")}).catch(function(){msg("Offline. Saved on this device only.")})}
+function push(){clearTimeout(ptm);ptm=setTimeout(function(){put("2000-01-01","targets",T)},1200)}
+function pull(){if(!on())return;fetch(base()+"?select=log_date,session,data&order=log_date.desc&limit=500",{headers:hdr()}).then(function(r){return r.json()}).then(function(rows){if(!Array.isArray(rows)){msg("Could not read data. Check your details.");return}var L=store("gc-log")||{};rows.forEach(function(r){if(r.session==="targets"){T=r.data;store("gc-targets",T)}else L[r.log_date+"|"+r.session]=r.data});store("gc-log",L);msg("Synced.");render();review()}).catch(function(){msg("Offline. Using this device only.")})}
+function wkStart(o){var d=new Date(today.getFullYear(),today.getMonth(),today.getDate());d.setDate(d.getDate()-((d.getDay()+6)%7)+o*7);return d}
+function review(){var L=store("gc-log")||{},out="";[0,-1].forEach(function(o){var s=wkStart(o),e=new Date(s);e.setDate(e.getDate()+6);var a=iso(s),b=iso(e),n=0,w=0,up=0,dn=0,st=[],fc={};
+Object.keys(L).forEach(function(k){var p=k.split("|"),r=L[k];if(p[0]<a||p[0]>b)return;if(p[1]==="W"){w++;if(r.steps)st.push(r.steps)}else{n++;(r.fl||[]).forEach(function(x){fc[x]=(fc[x]||0)+1})}r.up?up++:dn++});
+var miss=Object.keys(fc).sort(function(x,y){return fc[y]-fc[x]}).slice(0,4),done=n+w,plan=o?7:((today.getDay()+6)%7)+1,sv=$("savage").checked;
+var vd=done>=plan&&!dn?"Every planned day done and clean. Respect.":done>=plan-1?"Nearly there. Close the gap next week.":(sv?"Only "+done+" of "+plan+" days. That’s weak as hell. Show up.":"Only "+done+" of "+plan+" days. Show up.");
+out+='<div class="ex"><div class="eh"><h3>'+(o?"Last week":"This week")+'</h3><span class="tgt">'+a.slice(5)+' to '+b.slice(5)+'</span></div><p class="note">'+(done?vd:"Nothing logged.")+'</p><p class="last">Gym sessions: '+n+' of 4 · Walk days: '+w+' of 3 · 👍 '+up+' · 👎 '+dn+'</p>'+(st.length?'<p class="last">Average steps: '+Math.round(st.reduce(function(x,y){return x+y},0)/st.length).toLocaleString()+'</p>':"")+(miss.length?'<p class="last">Most missed: '+miss.join(", ")+'</p>':"")+'</div>'});
+$("rv").innerHTML=out}
+$("su").value=CFG.url||"";$("sk").value=CFG.key||"";$("sp").value=CFG.pass||"";
+$("ss").onclick=function(){CFG={url:$("su").value.trim(),key:$("sk").value.trim(),pass:$("sp").value.trim()};store("gc-cfg",CFG);if(!on()){msg("Fill in all three boxes.");return}msg("Syncing...");var L=store("gc-log")||{};Object.keys(L).forEach(function(k){put(k.split("|")[0],k.split("|")[1],L[k])});push();pull()};
+$("savage").addEventListener("change",review);
+review();if(on())pull();
+render();
+</script>
+</body>
+</html>
